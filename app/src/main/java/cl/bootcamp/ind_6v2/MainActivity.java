@@ -1,24 +1,54 @@
 package cl.bootcamp.ind_6v2;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.RadioButton;
+import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+
 
 public class MainActivity extends AppCompatActivity {
+
+    Button btnElegir;
+    RadioButton rbpoke1, rbPoke2, rbPoke3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
+
+        btnElegir = findViewById(R.id.button);
+        rbpoke1 = findViewById(R.id.radioButton);
+        rbPoke2 = findViewById(R.id.radioButton2);
+        rbPoke3 = findViewById(R.id.radioButton3);
+
+        enviarNotify();
+
+
+    }
+
+    private void enviarNotify() {
+        btnElegir.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String pokemonSeleccionado = "";
+
+                if (rbpoke1.isChecked()) {
+                    pokemonSeleccionado = rbpoke1.getText().toString();
+                } else if (rbPoke2.isChecked()) {
+                    pokemonSeleccionado = rbPoke2.getText().toString();
+                } else if (rbPoke3.isChecked()) {
+                    pokemonSeleccionado = rbPoke3.getText().toString();
+                }
+
+                if (!pokemonSeleccionado.isEmpty()) {
+                    Toast.makeText(MainActivity.this, pokemonSeleccionado, Toast.LENGTH_LONG).show();
+                }
+            }
         });
     }
+
+
 }

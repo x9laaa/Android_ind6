@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
-    android:background="@drawable/fondopokev"
+    android:background="@drawable/fondopokeh"
     >
 
 
@@ -20,7 +20,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.798">
+        app:layout_constraintVertical_bias="0.75">
 
 
         <RadioButton
@@ -28,7 +28,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/rbPokemon1"
-            android:textColor="@color/white"
+
             android:layout_margin="10dp"
             />
 
@@ -37,7 +37,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/rbPokemon2"
-            android:textColor="@color/white"
             android:layout_margin="10dp"
             />
 
@@ -46,7 +45,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/rbPokemon3"
-            android:textColor="@color/white"
             android:layout_margin="10dp"
             />
     </RadioGroup>
