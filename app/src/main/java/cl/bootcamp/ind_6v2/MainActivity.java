@@ -1,18 +1,25 @@
 package cl.bootcamp.ind_6v2;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 
 public class MainActivity extends AppCompatActivity {
 
     Button btnElegir;
-    RadioButton rbpoke1, rbPoke2, rbPoke3;
+    RadioGroup rbPoke;
+    FragmentTransaction transaction;
+    Fragment fragmentDefault;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,12 +27,14 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         btnElegir = findViewById(R.id.button);
-        rbpoke1 = findViewById(R.id.radioButton);
-        rbPoke2 = findViewById(R.id.radioButton2);
-        rbPoke3 = findViewById(R.id.radioButton3);
+        rbPoke = findViewById(R.id.radioGroup);
+
+        fragmentDefault = new DefaultFragment();
+
+        transaction = getSupportFragmentManager().beginTransaction();
+        transaction.add(R.id.containerfragment, fragmentDefault).commit();
 
         enviarNotify();
-
 
     }
 
@@ -33,22 +42,65 @@ public class MainActivity extends AppCompatActivity {
         btnElegir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String pokemonSeleccionado = "";
+                RadioButton selectedRadioButton = findViewById(rbPoke.getCheckedRadioButtonId());
+                String pokemon = (String) selectedRadioButton.getText();
+                //Toast.makeText(MainActivity.this, pokemon, Toast.LENGTH_LONG).show();
+                mostarDialog(pokemon);
+                cambiarFragment(pokemon);
 
-                if (rbpoke1.isChecked()) {
-                    pokemonSeleccionado = rbpoke1.getText().toString();
-                } else if (rbPoke2.isChecked()) {
-                    pokemonSeleccionado = rbPoke2.getText().toString();
-                } else if (rbPoke3.isChecked()) {
-                    pokemonSeleccionado = rbPoke3.getText().toString();
-                }
-
-                if (!pokemonSeleccionado.isEmpty()) {
-                    Toast.makeText(MainActivity.this, pokemonSeleccionado, Toast.LENGTH_LONG).show();
-                }
             }
         });
     }
+
+    private void cambiarFragment(String pokemon) {
+        Fragment fragment;
+
+        switch (pokemon) {
+            case "Charmander":
+                fragment = new CharmanderFragment();
+                break;
+            case "Bulbasaur":
+                fragment = new BulbasaurFragment();
+                break;
+            case "Squirtle":
+                fragment = new SquirtleFragment();
+                break;
+            default:
+                fragment = new DefaultFragment();
+                break;
+        }
+
+        getSupportFragmentManager().beginTransaction().replace(R.id.containerfragment, fragment).commit();
+
+    }
+
+    public void mostarDialog(String pokemon) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        View dialogView = getLayoutInflater().inflate(R.layout.dialog_pokemon, null);
+        builder.setView(dialogView);
+
+        TextView namepokemon = dialogView.findViewById(R.id.textView);
+        TextView mensajepokemon = dialogView.findViewById(R.id.textdialog);
+        Button Button = dialogView.findViewById(R.id.button2);
+
+        String mensaje = "Pokémon Seleccionado es";
+        namepokemon.setText(pokemon);
+        mensajepokemon.setText(mensaje);
+        AlertDialog dialog = builder.create();
+
+        Button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                dialog.dismiss();
+
+            }
+        });
+
+        dialog.show();
+
+    }
+
 
 
 }
