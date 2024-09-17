@@ -1,5 +1,6 @@
 package cl.bootcamp.ind_6v2;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
@@ -7,6 +8,7 @@ import cl.bootcamp.ind_6v2.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
 
+    Intent intent;
     ActivityMainBinding binding;
 
     @Override
@@ -35,6 +37,15 @@ public class MainActivity extends AppCompatActivity {
             binding.btnCancelar.setVisibility(View.GONE);
             fondodefault();
         });
+
+        binding.btnConfirmar.setOnClickListener(v -> {
+            intent = new Intent(v.getContext(), SecondActivity.class);
+
+
+            intent.putExtra("pokemon", pokemonselecionado());
+            v.getContext().startActivity(intent);
+
+        });
     }
 
     public void fondodefault(){
@@ -54,5 +65,18 @@ public class MainActivity extends AppCompatActivity {
             binding.btnConfirmar.setBackgroundColor(getColor(R.color.azul));
 
         }
+    }
+
+    public String pokemonselecionado(){
+        String pokemon = null;
+        if (binding.rbpoke1.isChecked()){
+            pokemon = binding.rbpoke1.getText().toString();
+        } else if (binding.rbpoke2.isChecked()) {
+            pokemon = binding.rbpoke2.getText().toString();
+        } else if (binding.rbpoke3.isChecked()) {
+            pokemon = binding.rbpoke3.getText().toString();
+        }
+
+        return pokemon;
     }
 }
