@@ -1,67 +1,111 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
-    android:background="@drawable/fondopokeh"
-    >
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal">
 
+    <FrameLayout
+        android:id="@+id/FragmentContainer"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="2"
+        >
 
-    <RadioGroup
-        android:id="@+id/radioGroup"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical"
         android:gravity="center"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.75">
+        android:background="@color/black"
+        >
 
-
-        <RadioButton
-            android:id="@+id/radioButton"
+        <RadioGroup
+            android:id="@+id/rdGroup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/rbPokemon1"
+            android:orientation="vertical"
+            android:gravity="center"
+            tools:ignore="ExtraText">
 
-            android:layout_margin="10dp"
+            <RadioButton
+                android:id="@+id/rbpoke1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:checked="true"
+                android:text="@string/rbPokemon1"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                app:buttonTint="@color/colorAccent"
+                />
+
+            <RadioButton
+                android:id="@+id/rbpoke2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="@string/rbPokemon2"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                app:buttonTint="@color/verde"
+                />
+
+            <RadioButton
+                android:id="@+id/rbpoke3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="@string/rbPokemon3"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                app:buttonTint="@color/azul"
+                />
+
+        </RadioGroup>
+
+        <Button
+            android:id="@+id/btnElegir"
+            android:layout_width="262dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="5sp"
+            android:text="Elegir"
+            android:textSize="18sp"
+            android:backgroundTint="@color/colorAccent"
             />
 
-        <RadioButton
-            android:id="@+id/radioButton2"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/rbPokemon2"
-            android:layout_margin="10dp"
-            />
+            android:orientation="horizontal"
+            android:gravity="center"
+            >
 
-        <RadioButton
-            android:id="@+id/radioButton3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/rbPokemon3"
-            android:layout_margin="10dp"
-            />
-    </RadioGroup>
+            <Button
+                android:id="@+id/btnCancelar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="Cancelar"
+                android:visibility="gone"
+                android:textSize="18sp"
+                android:backgroundTint="@color/black"
 
-    <Button
-        android:id="@+id/button"
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="@string/bntSelect"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/radioGroup"
-        app:layout_constraintVertical_bias="0.314" />
+                />
+            <Button
+                android:id="@+id/btnConfirmar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="Confirmar"
+                android:textSize="18sp"
+                android:visibility="gone"
+                />
+        </LinearLayout>
 
+    </LinearLayout>
 
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

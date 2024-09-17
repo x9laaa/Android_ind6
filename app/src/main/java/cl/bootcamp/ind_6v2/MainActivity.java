@@ -1,106 +1,64 @@
 package cl.bootcamp.ind_6v2;
 
-import android.app.AlertDialog;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-
 
 public class MainActivity extends AppCompatActivity {
 
-    Button btnElegir;
-    RadioGroup rbPoke;
-    FragmentTransaction transaction;
-    Fragment fragmentDefault;
+    private Button btnElegir, btnConfirmar, btnCancelar;
+    RadioGroup rdGroup;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        btnElegir = findViewById(R.id.button);
-        rbPoke = findViewById(R.id.radioGroup);
+        btnElegir = findViewById(R.id.btnElegir);
+        btnConfirmar = findViewById(R.id.btnConfirmar);
+        btnCancelar = findViewById(R.id.btnCancelar);
+        rdGroup = findViewById(R.id.rdGroup);
 
-        fragmentDefault = new DefaultFragment();
+        fondodefault();
 
-        transaction = getSupportFragmentManager().beginTransaction();
-        transaction.add(R.id.containerfragment, fragmentDefault).commit();
+        btnElegir.setOnClickListener(v -> {
+            rdGroup.setVisibility(View.GONE);
+            btnElegir.setVisibility(View.GONE);
 
-        enviarNotify();
+            btnConfirmar.setVisibility(View.VISIBLE);
+            btnCancelar.setVisibility(View.VISIBLE);
+            cambiofondo();
+        });
 
-    }
+        btnCancelar.setOnClickListener(v -> {
+            rdGroup.setVisibility(View.VISIBLE);
+            btnElegir.setVisibility(View.VISIBLE);
 
-    private void enviarNotify() {
-        btnElegir.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                RadioButton selectedRadioButton = findViewById(rbPoke.getCheckedRadioButtonId());
-                String pokemon = (String) selectedRadioButton.getText();
-                //Toast.makeText(MainActivity.this, pokemon, Toast.LENGTH_LONG).show();
-                mostarDialog(pokemon);
-                cambiarFragment(pokemon);
-
-            }
+            btnConfirmar.setVisibility(View.GONE);
+            btnCancelar.setVisibility(View.GONE);
+            fondodefault();
         });
     }
 
-    private void cambiarFragment(String pokemon) {
-        Fragment fragment;
+    public void fondodefault(){
+        getSupportFragmentManager().beginTransaction().replace(R.id.FragmentContainer, new DefaultFragment()).commit();
+    }
 
-        switch (pokemon) {
-            case "Charmander":
-                fragment = new CharmanderFragment();
-                break;
-            case "Bulbasaur":
-                fragment = new BulbasaurFragment();
-                break;
-            case "Squirtle":
-                fragment = new SquirtleFragment();
-                break;
-            default:
-                fragment = new DefaultFragment();
-                break;
+    public void cambiofondo(){
+        int selectedId = rdGroup.getCheckedRadioButtonId();
+        if (selectedId == R.id.rbpoke1) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.FragmentContainer, new CharmanderFragment()).commit();
+            btnConfirmar.setBackgroundColor(getColor(R.color.colorAccent));
+        } else if (selectedId == R.id.rbpoke2) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.FragmentContainer, new BulbasaurFragment()).commit();
+            btnConfirmar.setBackgroundColor(getColor(R.color.verde));
+        } else if (selectedId == R.id.rbpoke3) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.FragmentContainer, new SquirtleFragment()).commit();
+            btnConfirmar.setBackgroundColor(getColor(R.color.azul));
+
         }
-
-        getSupportFragmentManager().beginTransaction().replace(R.id.containerfragment, fragment).commit();
-
     }
-
-    public void mostarDialog(String pokemon) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        View dialogView = getLayoutInflater().inflate(R.layout.dialog_pokemon, null);
-        builder.setView(dialogView);
-
-        TextView namepokemon = dialogView.findViewById(R.id.textView);
-        TextView mensajepokemon = dialogView.findViewById(R.id.textdialog);
-        Button Button = dialogView.findViewById(R.id.button2);
-
-        String mensaje = "Pokémon Seleccionado es";
-        namepokemon.setText(pokemon);
-        mensajepokemon.setText(mensaje);
-        AlertDialog dialog = builder.create();
-
-        Button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                dialog.dismiss();
-
-            }
-        });
-
-        dialog.show();
-
-    }
-
-
-
 }
