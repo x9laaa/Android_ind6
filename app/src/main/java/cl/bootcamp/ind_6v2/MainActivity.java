@@ -1,6 +1,7 @@
 package cl.bootcamp.ind_6v2;
 
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
@@ -40,7 +41,6 @@ public class MainActivity extends AppCompatActivity {
 
         binding.btnConfirmar.setOnClickListener(v -> {
             intent = new Intent(v.getContext(), SecondActivity.class);
-
 
             intent.putExtra("pokemon", pokemonselecionado());
             v.getContext().startActivity(intent);
